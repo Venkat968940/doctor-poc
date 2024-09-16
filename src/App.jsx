@@ -1,22 +1,17 @@
-import { AbilityContext } from "./hooks/abilityContext"
-import { defineAbilityFor } from "./hooks/defineAbility"
-import { useMenu } from "./hooks/userContext"
-import { Router } from "./routes/Routes"
-import { ThemeSetUp } from "./themes/Themes"
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import { AppRoutes } from "./components/Routes/Routes";
+import { ThemeSetup } from "./components/Theme/Theme";
+import { CustomizedSnackbar } from "./components/Hooks/Snackbar/Snackbar";
+import { UserProvider } from "./components/Hooks/UserContext/UserContext";
 
-function App() {
-  const { role } = useMenu()
-  const ability = defineAbilityFor(role)
+const App = () => (
+  <ThemeSetup>
+    <CustomizedSnackbar />
+    <UserProvider>
+      <Router><AppRoutes /></Router>
+    </UserProvider>
+  </ThemeSetup>
+);
 
-  console.log(ability, role)
-
-return(
-<AbilityContext.Provider value={ability}>
-<ThemeSetUp>
-<Router />
-</ThemeSetUp>
-</AbilityContext.Provider>
-)
-}
-
-export default App
+export default App;
