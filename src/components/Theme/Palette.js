@@ -6,7 +6,7 @@ const PRIMARY = {
 
 };
 const SECONDARY = {
-  main : '#FACE33', 
+  main : '#F17B21', 
   light : '#FFECE1', //santhana color
   // dark : '#5E35B1'
 };

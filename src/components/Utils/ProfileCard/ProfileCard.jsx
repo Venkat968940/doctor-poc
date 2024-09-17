@@ -3,11 +3,14 @@ import { Avatar, Box, Button, Grid2, Typography } from "@mui/material";
 import React, { Fragment, useState } from "react";
 import DoctorProfile from "../../../app/Pages/Appointment/DoctorProfile";
 
-const ProfileCard = () => {
+const ProfileCard = ({value}) => {
     const [open, setOpen] = useState(false)
+    const [data, setData] = useState([])
 
-    const handleAppointment=()=>{
+    const handleAppointment=(val)=>{
   setOpen(!open)
+  console.log(val)
+  setData(val)
       }
   return (
 <Fragment>
@@ -22,19 +25,19 @@ const ProfileCard = () => {
       </Grid2>
       <Grid2 size="grow">
       <Box sx={{display:"flex", alignItems:"center"}}>
-        <Typography variant="body1" fontWeight={600} marginRight={1} >Doctor Name</Typography>
+        <Typography variant="body1" fontWeight={600} marginRight={1} >{value.doctor_name}</Typography>
             <Verified  color="primary" fontSize="15"/> 
         </Box>
-        <Typography variant="subtitle2" color="textSecondary">Doctor Specialist</Typography>
+        <Typography variant="subtitle2" color="textSecondary">{value.specialist}</Typography>
         <Box sx={{display:"flex", alignItems:"center"}}>
             <CurrencyRupee color="error" fontSize="15"/> 
-        <Typography variant="body1" fontWeight={600} color="error">500</Typography>
+        <Typography variant="body1" fontWeight={600} color="error">{value.consult_fee}</Typography>
         </Box>
       </Grid2>
       <Grid2 size="auto">
         <Grid2 sx={{ display: "flex", alignItems: "center" }}>
           <Star sx={{ color: "gold" }} fontSize="small" />
-          <Typography>4</Typography>
+          <Typography fontWeight={600} variant="subtitle2">{value.rating}</Typography>
         </Grid2>
        
       </Grid2> 
@@ -47,13 +50,13 @@ const ProfileCard = () => {
           }}
         >
           <Language fontSize="small" sx={{ marginRight: 1 }} />
-          <Typography variant="body1">Languages</Typography>
+          <Typography variant="body2">{value.languages}</Typography>
         </Grid2>
       <Grid2 size={12}>
-        <Button variant="contained" fullWidth onClick={handleAppointment}>Book Appointment</Button>
+        <Button variant="contained" fullWidth onClick={()=>handleAppointment(value)}>Book Appointment</Button>
         </Grid2>
     </Grid2>
-    {open && <DoctorProfile setOpen={setOpen}/>}
+    {open && <DoctorProfile docData={data} setOpen={setOpen}/>}
 </Fragment>
   );
 };

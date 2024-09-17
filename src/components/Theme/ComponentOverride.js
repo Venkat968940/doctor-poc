@@ -142,5 +142,46 @@ export const ComponentOverride = (theme) => {
           },
         },
     },
+    MuiTabs: {
+      defaultProps: {},
+      styleOverrides: {
+        root: {
+          backgroundColor: theme.palette.common.white,
+          maxHeight: "60px",
+          minHeight: "40px",
+          height: "100%",
+          "& .MuiTabs-flexContainer ": {
+            maxHeight: "60px",
+            minHeight: "40px",
+            height: "100%",
+            paddingBlock: "2px",
+          },
+          "& .MuiTabs-indicator": {
+            backgroundColor: theme.palette.secondary.main,
+          },
+          "& .MuiTab-root": {
+            padding: 0,
+            color: theme.palette.grey[200],
+            textTransform: "capitalize",
+            fontFamily: "roboto-medium",
+            "&.MuiButtonBase-root.MuiTab-root": {
+              padding: "8px",
+              minHeight: "10px",
+              marginBlock: "10px",
+              // borderInlineEnd: "0.4px solid rgba(189, 189, 189, 0.5);",
+              "&:first-of-type": {
+                // borderInlineStart: "0.4px solid rgba(189, 189, 189, 0.6);",
+              },
+            },
+            "&.Mui-selected": {
+              color: theme.palette.common.white,
+              backgroundColor: theme.palette.secondary.main,
+              borderRadius:25,
+              // fontWeight:600,
+            },
+          },
+        },
+      },
+    },
   };
 };

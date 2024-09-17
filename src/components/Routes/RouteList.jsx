@@ -12,16 +12,19 @@ export const RouteData = () =>{
     // console.log(ability)
     const RouteList = [
         {
+            title:"Dashboard",
             path:'dashboard',
             element : Dashboard,
-            ability: true
+            ability: true,
         },
         {
+            title:"Book Appointment",
             path:'book-appointment',
             element: ability.can('visit', 'member') ? Appointment : AccessDenied,
             ability : ability.can('visit', 'member'),
         },
         {
+            title:"My Appointment",
             path:'my-appointments',
             element: ability.can('visit', 'member') ? MyAppointment : AccessDenied,
             ability : ability.can('visit', 'member'),
