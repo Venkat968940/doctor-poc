@@ -5,9 +5,10 @@ import { showSnackbar } from "../Snackbar/Reducers";
 
 export const GetData = (title, apiUrl) => {
   const dispatch = useDispatch();
-console.log(title, apiUrl)
   const fetchData = async () => {
-    const response = await axios.get(apiUrl);
+    const response = await axios.get(apiUrl).catch((err) => {
+      dispatch(showSnackbar({open: true, type: "error", message: err.response.data.message,}));
+    });
     return response.data;
   };
   return useQuery({
@@ -16,9 +17,5 @@ console.log(title, apiUrl)
     retry: false,
     refetchOnWindowFocus: false,
     keepPreviousData: true,
-    onError : (error) =>{
-        dispatch(showSnackbar({open: true, type:"error",message: error.message}))
-    }
   });
 };
-  

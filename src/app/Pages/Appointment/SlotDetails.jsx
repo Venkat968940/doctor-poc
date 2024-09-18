@@ -40,8 +40,8 @@ setSlot(null)
             sx={{ height: "auto", width: 80, marginRight: 1 }}
           />
           <Grid2>
-            <Typography variant="body1" fontWeight={600} textTransform="capitalize">{data?.name}</Typography>
-            <Typography variant="subtitle2" color="textSecondary" textTransform="capitalize">{data?.doctorDetails?.specialization}</Typography>
+            <Typography variant="body1" fontWeight={600}>{data?.name}</Typography>
+            <Typography variant="subtitle2" color="textSecondary">{data?.doctorDetails?.specialization}</Typography>
             <Typography variant="body2" fontWeight={600}>Experience</Typography>
             <Typography variant="body2">{data?.doctorDetails?.experience}</Typography>
           </Grid2>

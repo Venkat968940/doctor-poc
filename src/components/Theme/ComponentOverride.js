@@ -3,7 +3,7 @@ export const ComponentOverride = (theme) => {
     MuiButton: {
       defaultProps: {
         disableElevation: true,
-        size:"small"
+        size: "small",
       },
       styleOverrides: {
         root: {
@@ -101,46 +101,46 @@ export const ComponentOverride = (theme) => {
         },
       },
     },
-    MuiDataGrid:{
+    MuiDataGrid: {
       styleOverrides: {
-          root: {
-             position:'relative',
-             
-            '& .MuiDataGrid-root .MuiDataGrid-cell:focus-within':{
-              outline:"none !important",
-            },
-            '& .MuiDataGrid-columnHeader':{
-              backgroundColor:theme.palette.primary.main,
-              color:theme.palette.common.white,
-            },
-           '& .MuiDataGrid-main':{
+        root: {
+          position: "relative",
+
+          "& .MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
+            outline: "none !important",
+          },
+          "& .MuiDataGrid-columnHeader": {
+            backgroundColor: theme.palette.primary.main,
+            color: theme.palette.common.white,
+          },
+          "& .MuiDataGrid-main": {
             width: "100%",
             height: "calc(100dvh - 280px)",
           },
-          "& .MuiDataGrid-cell":{
-            textAlign:'center',
+          "& .MuiDataGrid-cell": {
+            textAlign: "center",
             borderRight: "1px solid #ccc",
           },
-          '& .MuiDataGrid-root .MuiDataGrid-header':{
-              position: "sticky",
-              top: 0,
-              zIndex: 1,
-            },
-           '& .MuiDataGrid-menuIcon':{
-             display:'none',
-           },
-           '& .MuiDataGrid-sortIcon':{
-              display:'none',
-              color:'white'
-            },
+          "& .MuiDataGrid-root .MuiDataGrid-header": {
+            position: "sticky",
+            top: 0,
+            zIndex: 1,
           },
-          row: {
-              backgroundColor:theme.palette.common.white,
-            '&:hover':{
-              backgroundColor:theme.palette.common.white,
-            }
+          "& .MuiDataGrid-menuIcon": {
+            display: "none",
+          },
+          "& .MuiDataGrid-sortIcon": {
+            display: "none",
+            color: "white",
           },
         },
+        row: {
+          backgroundColor: theme.palette.common.white,
+          "&:hover": {
+            backgroundColor: theme.palette.common.white,
+          },
+        },
+      },
     },
     MuiTabs: {
       defaultProps: {},
@@ -176,11 +176,19 @@ export const ComponentOverride = (theme) => {
             "&.Mui-selected": {
               color: theme.palette.common.white,
               backgroundColor: theme.palette.secondary.main,
-              borderRadius:25,
+              borderRadius: 25,
               // fontWeight:600,
             },
           },
         },
+      },
+    },
+    MuiTypography: {
+      defaultProps: {
+        textTransform : 'capitalize'
+      },
+      styleOverrides: {
+        root: {},
       },
     },
   };

@@ -33,12 +33,12 @@ const ProfileCard = ({ value }) => {
         </Grid2>
         <Grid2 size="grow">
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Typography variant="body1" fontWeight={600} marginRight={1} textTransform="capitalize">
+            <Typography variant="body1" fontWeight={600} marginRight={1}>
               {value?.name}
             </Typography>
             <Verified color="primary" fontSize="15" />
           </Box>
-          <Typography variant="subtitle2" color="textSecondary" textTransform="capitalize">
+          <Typography variant="subtitle2" color="textSecondary">
           {value?.doctorDetails?.specialization}
           </Typography>
           <Box sx={{ display: "flex", alignItems: "center" }}>
