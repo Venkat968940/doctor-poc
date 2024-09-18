@@ -5,11 +5,20 @@ import './index.css'
 import { Provider } from 'react-redux'
 import { store } from './components/Store/Store.js'
 import { GoogleOAuthProvider } from '@react-oauth/google'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import axios from 'axios'
+
+const token = localStorage.getItem('token')
+const queryClient = new QueryClient()
+
+axios.defaults.baseURL = import.meta.env.VITE_BASE_URL
+axios.defaults.headers.common['Content-Type'] = 'application/json';
+axios.defaults.headers.common['Authorization']=`Bearer ${token}`
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
-    <GoogleOAuthProvider clientId='661535884561-r410jmmn4t8khc4lel4jigk0q0nlmj9e.apps.googleusercontent.com'><App /></GoogleOAuthProvider>
+   <QueryClientProvider client={queryClient}><App/></QueryClientProvider>
     </Provider>
   </StrictMode>,
 )

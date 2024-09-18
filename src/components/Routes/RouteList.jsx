@@ -20,14 +20,14 @@ export const RouteData = () =>{
         {
             title:"Book Appointment",
             path:'book-appointment',
-            element: ability.can('visit', 'member') ? Appointment : AccessDenied,
-            ability : ability.can('visit', 'member'),
+            element: ability.can('visit', 'Patient') ? Appointment : AccessDenied,
+            ability : ability.can('visit', 'Patient'),
         },
         {
             title:"My Appointment",
             path:'my-appointments',
-            element: ability.can('visit', 'member') ? MyAppointment : AccessDenied,
-            ability : ability.can('visit', 'member'),
+            element: ability.can('visit', 'Patient') ? MyAppointment : AccessDenied,
+            ability : ability.can('visit', 'Patient'),
         },
 
     ]

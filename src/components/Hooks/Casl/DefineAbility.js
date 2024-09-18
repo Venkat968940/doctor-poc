@@ -5,14 +5,14 @@ export function DefineAbilityFor(role) {
 // console.log(role)
   if (role === 'admin') {
     can('manage', 'all');  // admin can do everything
-  } else if (role === 'member') {
-    can('visit', 'member'); 
+  } else if (role === 'Patient') {
+    can('visit', 'Patient'); 
     cannot('visit', 'admin'); 
-    cannot('visit', 'doctor')
+    cannot('visit', 'Doctor')
   }
   else if(role ==='doctor'){
-    can('read','doctor');
-    cannot('visit', 'member')
+    can('read','Doctor');
+    cannot('visit', 'Patient')
     cannot('visit', 'admin')
   }
 

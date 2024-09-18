@@ -79,7 +79,7 @@ const Header = () => {
               height: "100%",
             }}
           >
-            {!IsMobile && role === "member" && (
+            {!IsMobile && role === "Patient" && (
               <Link
                 to="/book-appointment"
                 style={{ textDecoration: "none", marginRight: 1 }}

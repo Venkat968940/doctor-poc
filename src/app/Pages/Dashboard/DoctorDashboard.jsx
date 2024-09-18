@@ -1,8 +1,10 @@
 import { Grid2, IconButton, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import { Data } from './data';
 import { Clear, Done } from '@mui/icons-material';
 import CustomTable from '../../../components/Utils/CustomTable/CustomTable';
+import { FetchTableData } from '../../../components/Hooks/ApiHandler/FetchTableData';
+import moment from 'moment';
 
 const DoctorDashboard = () => {
   const pageOption = [10, 25, 50, 100];
@@ -10,6 +12,8 @@ const DoctorDashboard = () => {
   const [rowsPerPage, setRowsPerPage] = useState(pageOption[0]);
   const [pageCount, setPageCount] = useState(0);
   const [search, setSearch] = useState("");
+
+const {data, isLoading, isSuccess, refetch, } = FetchTableData('appointment_list','hms/getAppointments?',page, rowsPerPage, search, setPageCount)
 
   const columns = [
     {
@@ -31,7 +35,7 @@ const DoctorDashboard = () => {
     }, 
     {
       field: "appointmentDate",
-      headerName: "Mobile No.",
+      headerName: "Scheduled Date",
       headerAlign: "center",
       align: "left",
       flex:1,
@@ -60,12 +64,14 @@ const DoctorDashboard = () => {
   ];
 
 
-  const rows = Data.filter(val=>val.patient_name.toLowerCase().includes(search.toLowerCase())).map((val, idx)=>({
+  const rows = isSuccess ? data.
+  // filter(val=>val.patient_name.toLowerCase().includes(search.toLowerCase()))
+  map((val, idx)=>({
     sno: idx + 1,
-    id: val.id,
-    patientName : val.patient_name,
-    appointmentDate: val.scheduled_date + ", " + val.scheduled_time
-    }))
+    id: val._id,
+    patientName :"",
+    appointmentDate: moment(val.startTime).format('LLL')
+    })) : []
     const props = {
         rows: rows,
         columns: columns,
@@ -77,13 +83,17 @@ const DoctorDashboard = () => {
         setRowsPerPage: setRowsPerPage,
         pageCount: pageCount,
         pageOption: pageOption,
+        isLoading : isLoading
       };
-
+console.log(data, isLoading, isSuccess)
+if(isSuccess){
+  console.log(moment(data[0].startTime).format('LLL'))
+}
   return (
-   <Grid2 sx={{padding:2, backgroundColor:'white', borderRadius:3}}>
-    <Typography variant='h5'>Appointment List</Typography>
-    <CustomTable props={props} />
-   </Grid2>
+ <Fragment>
+   <Typography variant='h5'>Appointment List</Typography>
+   <CustomTable props={props} />
+ </Fragment>
   )
 }
 

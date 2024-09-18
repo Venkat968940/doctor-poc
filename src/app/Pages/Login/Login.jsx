@@ -1,14 +1,17 @@
-import { Avatar, Button, Divider, Grid2, TextField, Typography } from "@mui/material";
+import { Avatar, Button, Grid2 } from "@mui/material";
 import { useFormik } from "formik";
-import * as yup from "yup";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import * as yup from "yup";
 import { useMenu } from "../../../components/Hooks/UserContext/UserContext";
-import CustomTextField from "../../../components/Utils/CustomInput/CustomTextField";
 import CustomPassword from "../../../components/Utils/CustomInput/CustomPassword";
-import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
+import CustomTextField from "../../../components/Utils/CustomInput/CustomTextField";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { showSnackbar } from "../../../components/Hooks/Snackbar/Reducers";
 
 const Login = () => {
+  const dispatch = useDispatch()
   const navigate = useNavigate();
   const { setRole } = useMenu();
   const LoginValidation = yup.object({
@@ -32,26 +35,25 @@ const Login = () => {
   });
 
   function handleLogin() {
-    const { email } = formik.values;
-    if (email === "doctor@gmail.com") {
-      setRole("doctor");
-      localStorage.setItem("role", "doctor");
-    } else {
-      setRole("member");
-      localStorage.setItem("role", "member");
-    }
-    localStorage.setItem("token", "stvb70w3LpLqepCW6coEfA==");
+   axios.post('user/login',{
+    email: formik.values.email,
+    password : formik.values.password,
+   })
+   .then(res=>{
+    axios.defaults.headers.common['Authorization']=`Bearer ${res.data.accessToken}`
+    localStorage.setItem('token', res.data.accessToken)
+    dispatch(showSnackbar({open:true, type:"success", message: res?.data?.message}))    
+    let base64Url = res.data.accessToken.split('.')[1];
+    const decoded = JSON.parse(window.atob(base64Url));
+    console.log(decoded)
+    setRole(decoded?.user?.role)
     navigate("/");
+   })
+   .catch(err=>{
+    // console.log(err.response.data.message)
+    dispatch(showSnackbar({open:true, type:"error", message: err?.response?.data?.message}))    
+   })
   }
-
-  const handleSuccess = (response) => {
-    console.log("Login Successful", response);
-    // Use the response to send the token to your backend and verify it
-  };
-
-  const handleFailure = (error) => {
-    console.log("Login Failed", error);
-  };
 
   return (
     <Grid2
@@ -93,10 +95,7 @@ const Login = () => {
             Sign In
           </Button>
         </Grid2>
-        <Divider sx={{marginBottom:2}}>or</Divider>
-        <GoogleOAuthProvider clientId="464802840272-n795t3jvjdln68sian71nqs78q34vm1k.apps.googleusercontent.com">
-          <GoogleLogin  onSuccess={handleSuccess} onError={handleFailure}/>
-        </GoogleOAuthProvider>
+        {/* <Divider sx={{marginBottom:2}}>or</Divider> */}
       </Grid2>
     </Grid2>
   );
