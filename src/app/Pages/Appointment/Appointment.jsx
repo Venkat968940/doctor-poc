@@ -7,18 +7,15 @@ const Appointment = () => {
 
   return (
     <Fragment>
-      <Typography variant="h6" fontWeight={600}>
-        Schedule Appointment
-      </Typography>
+      <Typography variant="h6" fontWeight={600}>Schedule Appointment</Typography>
       <Box
       sx={{
         height:"90%", 
-          marginTop:1,
+        marginTop:1,
         borderRadius:3, 
         border:"1px solid #ccc",
       }}>
-  <Grid2
-        container
+  <Grid2 container
         sx={{
           height: "fit-content",
           maxHeight: "92%",

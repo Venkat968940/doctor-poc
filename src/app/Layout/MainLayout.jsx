@@ -12,7 +12,9 @@ const MainLayout = () => {
         <Toolbar variant='dense'/>
         <Grid2 sx={{width:"100%", height:"calc(100% - 50px)", display:"flex", }}>
             {/* <Sidebar /> */}
-            <Grid2 sx={{width:"100%", padding:2, background: theme.palette.grey[50],}}><Outlet/></Grid2>
+            <Grid2 sx={{width:"100%", padding:2, background: theme.palette.grey[50],}}>
+              <Grid2 sx={{background:"white", height:"100%", padding:2, borderRadius:4}}><Outlet/></Grid2>
+            </Grid2>
         </Grid2>
     </Grid2>
   )
