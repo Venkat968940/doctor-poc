@@ -1,8 +1,9 @@
 import { CalendarMonth, CurrencyRupee, Language, Schedule, Star, Verified } from "@mui/icons-material";
 import { Avatar, Box, Button, Grid2, Typography } from "@mui/material";
+import moment from "moment";
 import React, { Fragment, useState } from "react";
 
-const AppointmentCard = () => {
+const AppointmentCard = ({info}) => {
     const [open, setOpen] = useState(false)
 
     const handleAppointment=()=>{
@@ -21,17 +22,17 @@ const AppointmentCard = () => {
       </Grid2>
       <Grid2 size="grow">
       <Box sx={{display:"flex", alignItems:"center"}}>
-        <Typography variant="body1" fontWeight={600} marginRight={1} >Doctor Name</Typography>
+        <Typography variant="body1" fontWeight={600} marginRight={1} >{info?.doctor_name}</Typography>
             <Verified  color="primary" fontSize="15"/> 
         </Box>
-        <Typography variant="subtitle2" color="textSecondary">Doctor Specialist</Typography>
-        <Typography variant="subtitle2" color="primary">View Info</Typography>
+        <Typography variant="subtitle2" color="textSecondary">{info?.specialization}</Typography>
+        {/* <Typography variant="subtitle2" color="primary">View Info</Typography> */}
        
       </Grid2>
       <Grid2 size="auto">
         <Grid2 sx={{ display: "flex", alignItems: "center" }}>
           <Star sx={{ color: "gold" }} fontSize="small" />
-          <Typography>4</Typography>
+          <Typography fontWeight={600} variant="subtitle2">{info?.rating}</Typography>
         </Grid2>
        
       </Grid2> 
@@ -44,11 +45,11 @@ const AppointmentCard = () => {
           }}
         >
            <CalendarMonth color='primary' sx={{marginRight:1}}/>
-           <Typography variant='body2'>Date</Typography>
+           <Typography variant='body2' fontWeight={600}>{moment(info?.startTime).format('DD/MM/YYYY')}</Typography>
         </Grid2>
         <Grid2 sx={{display:"flex", alignItems:"center", marginBlock:0.5}}>
             <Schedule color='primary' sx={{marginRight:1}}/>
-            <Typography variant='body2'>Time</Typography>
+            <Typography variant='body2'>{moment(info?.startTime).format('h:mm A')} - {moment(info?.endTime).format('h:mm A')}</Typography>
            </Grid2>
     </Grid2>
 </Fragment>

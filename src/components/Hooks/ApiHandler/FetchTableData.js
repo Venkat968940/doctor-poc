@@ -4,14 +4,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { showSnackbar } from "../Snackbar/Reducers";
 
-export const FetchTableData = (
-  title,
-  getUrl,
-  page,
-  rowsPerPage,
-  search,
-  setPageCount
-) => {
+export const FetchTableData = (title, getUrl, page, rowsPerPage, search, setPageCount) => {
   const dispatch = useDispatch();
 
   const getMethod = async () => {

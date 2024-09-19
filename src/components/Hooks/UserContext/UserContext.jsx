@@ -8,6 +8,7 @@ const [role, setRole] = useState(roleData || "")
 useEffect(()=>{
 if(role!==""){
     localStorage.setItem('role', role)
+    console.log(role)
 }
 },[role])
 return(

@@ -11,6 +11,7 @@ import PaymentSuccess from "./PaymentSuccess";
 import SlotDetails from "./SlotDetails";
 import { useDispatch } from "react-redux";
 import { showSnackbar } from "../../../components/Hooks/Snackbar/Reducers";
+import axios from "axios";
 
 const DoctorProfile = ({ setOpen, docData }) => {
   const dispatch = useDispatch()
@@ -19,11 +20,25 @@ const DoctorProfile = ({ setOpen, docData }) => {
   const [flag, setFlag] = useState(null)
 
   const handleSlot = () =>{
+    console.log(slot, flag)
 if(slot || flag){
   setConfirm("booknow")
 }else{
 dispatch(showSnackbar({open:true, message:"Select any one slot",type:"error"}))
 }
+  }
+  const handleAppointment = () =>{
+    console.log( slot)
+
+    axios.post('hms/createAppointment', slot)
+    .then(res=> {
+      setConfirm("success")
+      console.log(res)
+    })
+    .catch(err=>{
+      console.log(err)
+      dispatch(showSnackbar({open:true, type:"error", message: err.response.data.message}))
+    })
   }
   return (
     <Fragment>
@@ -48,7 +63,7 @@ dispatch(showSnackbar({open:true, message:"Select any one slot",type:"error"}))
             <Divider />
             <DialogActions sx={{ padding: 2 }}>
               <Button size="small" variant="outlined" onClick={() => setConfirm("confirm")}>Back</Button>
-              <Button size="small" variant="contained" onClick={() => setConfirm("success")}>Book Now</Button>
+              <Button size="small" variant="contained" onClick={handleAppointment}>Book Now</Button>
             </DialogActions>
           </Fragment>
         ) : (

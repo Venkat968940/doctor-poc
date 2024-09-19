@@ -69,7 +69,7 @@ const {data, isLoading, isSuccess, refetch, } = FetchTableData('appointment_list
   map((val, idx)=>({
     sno: idx + 1,
     id: val._id,
-    patientName :"",
+    patientName : val?.patient_name,
     appointmentDate: moment(val.startTime).format('LLL')
     })) : []
     const props = {

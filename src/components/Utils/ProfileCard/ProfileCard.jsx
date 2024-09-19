@@ -44,7 +44,7 @@ const ProfileCard = ({ value }) => {
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <CurrencyRupee color="error" fontSize="15" />
             <Typography variant="body1" fontWeight={600} color="error">
-              {value.consult_fee}
+              {value.doctorDetails?.consultationFee}
             </Typography>
           </Box>
         </Grid2>
@@ -52,7 +52,7 @@ const ProfileCard = ({ value }) => {
           <Grid2 sx={{ display: "flex", alignItems: "center" }}>
             <Star sx={{ color: "gold" }} fontSize="small" />
             <Typography fontWeight={600} variant="subtitle2">
-              {value.rating}
+              {value.doctorDetails?.rating}
             </Typography>
           </Grid2>
         </Grid2>
@@ -65,7 +65,7 @@ const ProfileCard = ({ value }) => {
           }}
         >
           <Language fontSize="small" sx={{ marginRight: 1 }} />
-          <Typography variant="body2">{value.languages}</Typography>
+          <Typography variant="body2">{value.doctorDetails?.language}</Typography>
         </Grid2>
         <Grid2 size={12}>
           <Button

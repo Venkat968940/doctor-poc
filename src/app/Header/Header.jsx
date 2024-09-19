@@ -77,15 +77,26 @@ const Header = () => {
               display: "flex",
               alignItems: "center",
               height: "100%",
+              gap:1
             }}
           >
             {!IsMobile && role === "Patient" && (
               <Link
                 to="/book-appointment"
-                style={{ textDecoration: "none", marginRight: 1 }}
+                style={{ textDecoration: "none", marginRight: '10px' }}
               >
                 <Typography variant="body1" color={theme.palette.common.white}>
                   Book Appointment
+                </Typography>
+              </Link>
+            )}
+             {!IsMobile && role === "Patient" && (
+              <Link
+                to="/my-appointments"
+                style={{ textDecoration: "none", marginInline: 1 }}
+              >
+                <Typography variant="body1" color={theme.palette.common.white}>
+                  My Appointment
                 </Typography>
               </Link>
             )}
@@ -112,9 +123,7 @@ const Header = () => {
               }}
             >
               <MenuItem>
-                <ListItemIcon>
-                  <Person />
-                </ListItemIcon>
+                <ListItemIcon><Person /></ListItemIcon>
                 My Profile
               </MenuItem>
               <MenuItem
@@ -159,8 +168,7 @@ const Header = () => {
                 style={{
                   textDecoration: "none",
                   color:
-                    location.pathname === `/${val.path}`
-                      ? theme.palette.common.white
+                    location.pathname === `/${val.path}`? theme.palette.common.white
                       : theme.palette.primary.light,
                       '&:hover':{
                         color: theme.palette.common.white,

@@ -9,7 +9,7 @@ const CustomTable = ({ props }) => {
     props;
 
   const handleChange = (event, newValue) => {
-    props.setRowsPerPage(newValue);
+    setRowsPerPage(newValue);
   };
 
   const handleSearch = (e) => {
