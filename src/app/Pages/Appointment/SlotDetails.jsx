@@ -1,8 +1,8 @@
 import { Language, Place } from "@mui/icons-material";
-import { Avatar, Box, Chip, Grid2, Tab, Tabs, Typography } from "@mui/material";
+import { Avatar, Chip, Grid2, Tab, Tabs, Typography } from "@mui/material";
+import moment from "moment";
 import React, { useState } from "react";
 import { GetData } from "../../../components/Hooks/ApiHandler/GetData";
-import moment from "moment";
 
 const SlotDetails = ({ data, setSlot, flag, setFlag }) => {
   const weekDays = [
@@ -23,15 +23,8 @@ const SlotDetails = ({ data, setSlot, flag, setFlag }) => {
     { id: 9, startTime: "5:00 PM", endTime: "6:00 PM" },
     { id: 10, startTime: "12:55 AM", endTime: "2:00 AM" },
   ];
-  const {
-    data: slotData,
-    isSuccess,
-    isLoading,
-  } = GetData(
-    "slotdata",
-    `hms/getAppointmentbyId?userId=${data?._id}&page=1&limit=10`
-  );
-  // const slotData = data?.slot_details''
+  
+  const { data: slotData, isSuccess, isLoading,} = GetData("slotdata",`hms/getAppointmentbyId?userId=${data?._id}&page=1&limit=10`);
 
   const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
@@ -62,51 +55,25 @@ const SlotDetails = ({ data, setSlot, flag, setFlag }) => {
     }
   };
 
-  // const mappedDateData = weekDays.map((val) => {
-  //   const isBooked =
-  //     isSuccess &&
-  //     slotData?.data.some(
-  //       (app) => moment(app.startTime).format("DD/MM/YYYY") === val.date 
-  //     );
-  
-  //   const slotTiming = slotTime.map((val) => {
-  //     const isTimeBooked = isSuccess && slotData?.data.some(
-  //         (app) =>
-  //           moment(app.startTime).format("h:mm A") === val.startTime &&
-  //           moment(app.endTime).format("h:mm A") === val.endTime
-  //       );
-  //     return {
-  //       ...val,
-  //       status: isBooked && isTimeBooked ? "Booked" : "Available",
-  //     };
-  //   });
-  //   return {
-  //     ...val,
-  //     slotTiming: slotTiming,
-  //   };
-  // });
-  
   const mappedDateData = weekDays.map((day) => {
-    // Map over the slotTime array for each day
     const slotTiming = slotTime.map((timeSlot) => {
-      const isTimeBooked =
-        isSuccess &&
+      const isTimeBooked = isSuccess &&
         slotData?.data.some(
           (app) =>
-            moment(app.startTime).format("DD/MM/YYYY") === day.date && // Match the date
-            moment(app.startTime).format("h:mm A") === timeSlot.startTime && // Match the start time
-            moment(app.endTime).format("h:mm A") === timeSlot.endTime // Match the end time
+            moment(app.startTime).format("DD/MM/YYYY") === day.date && 
+            moment(app.startTime).format("h:mm A") === timeSlot.startTime && 
+            moment(app.endTime).format("h:mm A") === timeSlot.endTime 
         );
   
       return {
         ...timeSlot,
-        status: isTimeBooked ? "Booked" : "Available", // Set the status
+        status: isTimeBooked ? "Booked" : "Available",
       };
     });
   
     return {
       ...day,
-      slotTiming: slotTiming, // Include updated slot timings
+      slotTiming: slotTiming, 
     };
   });
   
@@ -121,48 +88,31 @@ console.log(mappedDateData)
               sx={{ height: "auto", width: 80, marginRight: 1 }}
             />
             <Grid2>
-              <Typography variant="body1" fontWeight={600}>
-                {data?.name}
-              </Typography>
-              <Typography variant="subtitle2" color="textSecondary">
-                {data?.doctorDetails?.specialization}
-              </Typography>
-              <Typography variant="body2" fontWeight={600}>
-                Experience
-              </Typography>
-              <Typography variant="body2">
-                {data?.doctorDetails?.experience}
-              </Typography>
+              <Typography variant="body1" fontWeight={600}>{data?.name}</Typography>
+              <Typography variant="subtitle2" color="textSecondary">{data?.doctorDetails?.specialization}</Typography>
+              <Typography variant="body2" fontWeight={600}>Experience</Typography>
+              <Typography variant="body2">{data?.doctorDetails?.experience}</Typography>
             </Grid2>
           </Grid2>
           <Grid2 sx={{ marginBlock: 1 }}>
-            <Typography variant="body2" fontWeight={600}>
-              Reg No. {data?.doctorDetails?.licenseNumber}
-            </Typography>
-            <Grid2
-              size={12}
+            <Typography variant="body2" fontWeight={600}>Reg No. {data?.doctorDetails?.licenseNumber}</Typography>
+            <Grid2 size={12}
               sx={{ display: "flex", alignItems: "center", marginBlock: 1 }}
             >
               <Language fontSize="small" sx={{ marginRight: 1 }} />
-              <Typography variant="body2">
-                {data?.doctorDetails?.language}
-              </Typography>
+              <Typography variant="body2">{data?.doctorDetails?.language}</Typography>
             </Grid2>
             <Grid2
               size={12}
               sx={{ display: "flex", alignItems: "center", marginBlock: 1 }}
             >
               <Place fontSize="small" sx={{ marginRight: 1 }} />
-              <Typography variant="body2">
-                {data?.doctorDetails?.location}
-              </Typography>
+              <Typography variant="body2">{data?.doctorDetails?.location}</Typography>
             </Grid2>
           </Grid2>
         </Grid2>
         <Grid2 size={{ xs: 12, sm: 6 }}>
-          <Typography variant="body1" fontWeight={600}>
-            More About
-          </Typography>
+          <Typography variant="body1" fontWeight={600}>More About</Typography>
           <Typography variant="body2">{data?.doctorDetails?.about}</Typography>
         </Grid2>
       </Grid2>
@@ -177,40 +127,17 @@ console.log(mappedDateData)
             .filter((item, index) => index === value)
             .map((val) =>
               val.slotTiming.map((time, i) => (
-                <Grid2
-                  key={i}
-                  size="auto"
-                  onClick={() => handleSlotTime(time, val.date)}
-                >
-                  <Chip
-                    label={`${time.startTime} - ${time.endTime}`}
+                <Grid2 key={i} size="auto" onClick={() => handleSlotTime(time, val.date)}>
+                  <Chip label={`${time.startTime} - ${time.endTime}`}
                     variant="filled"
                     size="small"
-                    color={
-                      flag?.id === time.id && flag?.date === val.date
-                        ? "success"
-                        : "default"
-                    }
+                    color={ flag?.id === time.id && flag?.date === val.date ? "success" : "default"}
                     disabled={time.status === "Booked"}
                     sx={{ marginInline: 1, marginBottom: 1, cursor: "pointer" }}
                   />
                 </Grid2>
               ))
             )}
-          {/* {isSuccess && slotData.data.filter((item, index)=>index===value).map((val,idx)=> (
-        <Grid2 key={idx} size="auto" 
-        onClick={()=> handleSlotTime(val)}
-        >
-        <Chip
-          label={moment(val.startTime).format("LT")}
-          variant="filled"
-          size="small"
-          color={ flag===val ? "success" :  "default"}
-          disabled={val.status==="Scheduled"}
-          sx={{ marginInline: 1, marginBottom: 1, cursor: "pointer" }}
-        />
-      </Grid2>
-        ))} */}
         </Grid2>
       </Grid2>
     </Grid2>

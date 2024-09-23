@@ -1,24 +1,27 @@
 import { ArrowLeft, ArrowRight } from "@mui/icons-material";
-import { Autocomplete, Grid2, Pagination, PaginationItem, TextField, Typography, useTheme } from "@mui/material";
+import {
+  Autocomplete,
+  Grid2,
+  Pagination,
+  PaginationItem,
+  TextField,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import React from "react";
+import { PaginationTheme } from "../../../styles/CustomStyles";
 
-export const CustomizedPagination = (props) => {
-    const theme = useTheme()
-    // const {rowsPerPage, page, setPage,  pageCount,setRowsPerPage, pageOption,  } = props
-console.log(props)
-    const handleChange = (event, newValue) => {
-        props.setRowsPerPage(newValue);
-      };
+export const CustomizedPagination = ({ props }) => {
+  const theme = useTheme();
+  const classes = PaginationTheme()
+  const { rowsPerPage, page, setPage, pageCount, setRowsPerPage, pageOption } =
+    props;
+
+  const handleChange = (event, newValue) => {
+    setRowsPerPage(newValue);
+  };
   return (
-    <Grid2
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: 1,
-        marginTop: "auto",
-      }}
-    >
+    <Grid2 className={classes.root}>
       <Grid2
         sx={{
           display: "flex",
@@ -30,25 +33,23 @@ console.log(props)
           disablePortal
           id="page"
           size="small"
-          value={ props.rowsPerPage}
+          value={rowsPerPage}
           onChange={handleChange}
-          options={ props.pageOption}
+          options={pageOption}
           getOptionLabel={(option) => option.toString()}
           disableClearable
           renderInput={(params) => (
             <TextField {...params} size="small" sx={{ width: "100px" }} />
           )}
         />
-        <Typography variant="body1" ml="6px" color="GrayText">
-          rows per page
-        </Typography>
+        <Typography variant="body1" ml="6px" color="GrayText">rows per page</Typography>
       </Grid2>
       <Pagination
         color="primary"
         size="small"
-        count={Math.ceil( props.pageCount /  props.rowsPerPage)}
-        page={ props.page + 1}
-        onChange={(event, newPage) =>  props.setPage(newPage - 1)}
+        count={Math.ceil(pageCount / rowsPerPage)}
+        page={page + 1}
+        onChange={(event, newPage) => setPage(newPage - 1)}
         boundaryCount={1}
         renderItem={(item) => (
           <PaginationItem

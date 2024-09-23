@@ -17,5 +17,5 @@ export const GetData = (title, apiUrl) => {
     retry: false,
     refetchOnWindowFocus: false,
     keepPreviousData: true,
-  });
+  }); 
 };
