@@ -1,12 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { showSnackbar } from "../Snackbar/Reducers";
+import { showSnackbar } from "../Reducers/SnackbarReducers";
+import { AxiosInstance } from "../Axios/AxiosInstance";
 
 export const GetData = (title, apiUrl) => {
   const dispatch = useDispatch();
   const fetchData = async () => {
-    const response = await axios.get(apiUrl).catch((err) => {
+    const response = await AxiosInstance.get(apiUrl).catch((err) => {
       dispatch(showSnackbar({open: true, type: "error", message: err.response.data.message,}));
     });
     return response.data;

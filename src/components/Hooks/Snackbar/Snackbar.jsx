@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { hideSnackbar } from "./Reducers";
+import { hideSnackbar } from "../Reducers/SnackbarReducers";
 import { Alert, Snackbar } from "@mui/material";
 
 export const CustomizedSnackbar = () => {

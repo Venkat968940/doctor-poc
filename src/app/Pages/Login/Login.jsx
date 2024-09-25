@@ -1,18 +1,19 @@
 import { Avatar, Button, Divider, Grid2 } from "@mui/material";
 import { useFormik } from "formik";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMenu } from "../../../components/Hooks/UserContext/UserContext";
 import CustomPassword from "../../../components/Utils/CustomInput/CustomPassword";
 import CustomTextField from "../../../components/Utils/CustomInput/CustomTextField";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { showSnackbar } from "../../../components/Hooks/Snackbar/Reducers";
+import { showSnackbar } from "../../../components/Hooks/Reducers/SnackbarReducers";
 import { LoginValidation } from "../../../constants";
 import { LoginTheme } from "../../../styles/CustomStyles";
 import { signInWithPopup } from "firebase/auth";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, googleProvider } from "../../../components/Firebase/firebase";
+import { AxiosInstance } from "../../../components/Hooks/Axios/AxiosInstance";
 // import { auth } from "../../../components/Firebase/firebase";
 
 const Login = () => {
@@ -21,6 +22,7 @@ const Login = () => {
   const navigate = useNavigate();
   const { setRole } = useMenu();
   const [user] = useAuthState(auth);
+  const [flag, setFlag] = useState(false)
 
   const formik = useFormik({
     initialValues: {
@@ -32,14 +34,18 @@ const Login = () => {
   });
 
   function handleLogin() {
-    axios
+    AxiosInstance
       .post("user/login", {
         email: formik.values.email,
         password: formik.values.password,
       })
       .then((res) => {
-        axios.defaults.headers.common["Authorization"] = `Bearer ${res.data.accessToken}`;
-        localStorage.setItem("token", res.data.accessToken);
+        const { accessToken, refreshToken } = res.data;
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
+        // Set the token for future requests
+        AxiosInstance.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+   
         dispatch(showSnackbar({ open: true, type: "success", message: res?.data?.message,}));
         let base64Url = res.data.accessToken.split(".")[1];
         const decoded = JSON.parse(window.atob(base64Url));
@@ -55,11 +61,34 @@ const Login = () => {
   const signInWithGoogle = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
+       
+      console.log(auth?.currentUser)
+      handleGoogleLogin(auth?.currentUser)
     } catch (error) {
       console.error("Error signing in with Google:", error);
     }
   };
-console.log(user)
+
+function handleGoogleLogin(user){
+  const { uid} = user
+AxiosInstance.post("user/google-signin",{
+  uId: uid
+}).then(res=>{
+  const { accessToken, refreshToken } = res.data;
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
+        // Set the token for future requests
+        AxiosInstance.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+
+  dispatch(showSnackbar({ open: true, type: "success", message: res?.data?.message,}));
+  let base64Url = res.data.accessToken.split(".")[1];
+  const decoded = JSON.parse(window.atob(base64Url));
+  setRole(decoded?.user?.role);
+  navigate("/");
+}).catch(err=>console.log(err))
+  }
+
+
 
   return (
     <Grid2 className={classes.root} >

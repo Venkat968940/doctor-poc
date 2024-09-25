@@ -10,8 +10,9 @@ import AppointmentDetails from "./AppointmentDetails";
 import PaymentSuccess from "./PaymentSuccess";
 import SlotDetails from "./SlotDetails";
 import { useDispatch } from "react-redux";
-import { showSnackbar } from "../../../components/Hooks/Snackbar/Reducers";
+import { showSnackbar } from "../../../components/Hooks/Reducers/SnackbarReducers";
 import axios from "axios";
+import { AxiosInstance } from "../../../components/Hooks/Axios/AxiosInstance";
 
 const DoctorProfile = ({ setOpen, docData }) => {
   const dispatch = useDispatch();
@@ -34,7 +35,7 @@ const DoctorProfile = ({ setOpen, docData }) => {
     }
   };
   const handleAppointment = () => {
-    axios.post("hms/createAppointment", slot)
+    AxiosInstance.post("hms/createAppointment", slot)
       .then((res) => {
         setConfirm("success");
         console.log(res);

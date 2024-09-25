@@ -17,6 +17,8 @@ import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useMenu } from "../../components/Hooks/UserContext/UserContext";
 import { RouteData } from "../../components/Routes/RouteList";
+import { signOut } from "firebase/auth";
+import { auth } from "../../components/Firebase/firebase";
 
 const Header = () => {
   const theme = useTheme();
@@ -30,6 +32,8 @@ const Header = () => {
   const sideData = RouteData();
 
   function handleLogout() {
+    auth.signOut()
+    // signOut()
     setAnchorEl(null);
     localStorage.clear();
     navigate("/sign-in");

@@ -17,7 +17,7 @@ const MyAppointment = () => {
   const [pageCount, setPageCount] = useState(0);
   const [search, setSearch] = useState("");
 
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("accessToken");
   let base64Url = token.split(".")[1];
   const decoded = JSON.parse(window.atob(base64Url));
   console.log(decoded?.user?.id);
