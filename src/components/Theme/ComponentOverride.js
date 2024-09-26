@@ -105,23 +105,41 @@ export const ComponentOverride = (theme) => {
       styleOverrides: {
         root: {
           position: "relative",
-
-          "& .MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
+          "& .MuiDataGrid-cell:focus-within": {
             outline: "none !important",
           },
           "& .MuiDataGrid-columnHeader": {
             backgroundColor: theme.palette.primary.main,
             color: theme.palette.common.white,
+            borderTop:"none",
+            "&:focus": {
+              outline: "none",
+              boxShadow: "none",
+            },
+            "&:focus-within": {
+              outline: "none",
+              boxShadow: "none",
+            },
           },
           "& .MuiDataGrid-main": {
-            width: "100%",
-            height: "calc(100dvh - 280px)",
+            width: "100%", 
+            height: "calc(100dvh - 340px)",
           },
           "& .MuiDataGrid-cell": {
-            textAlign: "center",
             borderRight: "1px solid #ccc",
+            "&:focus": {
+              outline: "none",
+              boxShadow: "none",
+            },
+            "&:focus-within": {
+              outline: "none",
+              boxShadow: "none",
+            },
+            "&:last-child": {  // Remove border for the last cell in each row
+              borderRight: "none",
+            },
           },
-          "& .MuiDataGrid-root .MuiDataGrid-header": {
+          "& .MuiDataGrid-header": {
             position: "sticky",
             top: 0,
             zIndex: 1,
@@ -133,6 +151,9 @@ export const ComponentOverride = (theme) => {
             display: "none",
             color: "white",
           },
+          "& .MuiDataGrid-iconSeparator":{
+            display:"none"
+          }
         },
         row: {
           backgroundColor: theme.palette.common.white,
@@ -142,6 +163,7 @@ export const ComponentOverride = (theme) => {
         },
       },
     },
+
     MuiTabs: {
       defaultProps: {},
       styleOverrides: {
@@ -185,7 +207,7 @@ export const ComponentOverride = (theme) => {
     },
     MuiTypography: {
       defaultProps: {
-        textTransform : 'capitalize'
+        textTransform: "capitalize",
       },
       styleOverrides: {
         root: {},

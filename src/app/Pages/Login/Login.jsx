@@ -1,19 +1,18 @@
 import { Avatar, Button, Divider, Grid2 } from "@mui/material";
+import { signInWithPopup } from "firebase/auth";
 import { useFormik } from "formik";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { auth, googleProvider } from "../../../components/Firebase/firebase";
+import { AxiosInstance } from "../../../components/Hooks/Axios/AxiosInstance";
+import { showSnackbar } from "../../../components/Hooks/Reducers/SnackbarReducers";
 import { useMenu } from "../../../components/Hooks/UserContext/UserContext";
 import CustomPassword from "../../../components/Utils/CustomInput/CustomPassword";
 import CustomTextField from "../../../components/Utils/CustomInput/CustomTextField";
-import axios from "axios";
-import { useDispatch } from "react-redux";
-import { showSnackbar } from "../../../components/Hooks/Reducers/SnackbarReducers";
 import { LoginValidation } from "../../../constants";
 import { LoginTheme } from "../../../styles/CustomStyles";
-import { signInWithPopup } from "firebase/auth";
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, googleProvider } from "../../../components/Firebase/firebase";
-import { AxiosInstance } from "../../../components/Hooks/Axios/AxiosInstance";
 // import { auth } from "../../../components/Firebase/firebase";
 
 const Login = () => {
@@ -30,8 +29,19 @@ const Login = () => {
       password: "",
     },
     validationSchema: LoginValidation,
-    onSubmit: handleLogin,
+    onSubmit: handleSubmit, //dummy login
+    // onSubmit: handleLogin, //for api call
   });
+
+  function handleSubmit(){
+    if(formik.values.email==='sakthi@gmail.com' && formik.values.password==='sakthi@123'){
+      localStorage.setItem("accessToken", "accessToken");
+      localStorage.setItem("refreshToken", "refreshToken");
+      localStorage.setItem("role", "Doctor");
+      setRole('Doctor')
+      navigate("/");
+    }
+  }
 
   function handleLogin() {
     AxiosInstance
@@ -87,8 +97,6 @@ AxiosInstance.post("user/google-signin",{
   navigate("/");
 }).catch(err=>console.log(err))
   }
-
-
 
   return (
     <Grid2 className={classes.root} >

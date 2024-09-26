@@ -1,5 +1,5 @@
 import { Clear, Done } from "@mui/icons-material"
-import { IconButton } from "@mui/material"
+import { Grid2, IconButton } from "@mui/material"
 
 const serialNo ={
     field: "sno",
@@ -28,25 +28,18 @@ const appointmentDate =   {
     flex: 1,
     sortable: false,
   }
-  const actionTable = {
+  const actionTable =(handleAction)=> ({
     field: "action",
     headerName: "Action",
-    maxWidth: 100,
+    width: 120,
     headerAlign: "center",
-    disableExport: true,
-    editable: false,
     sortable: false,
-    disableColumnMenu: true,
     renderCell: (params) => (
-      <div className="flex justify-center w-full">
-        <IconButton>
-          <Done color="success" />
-        </IconButton>
-        <IconButton>
-          <Clear color="error" />
-        </IconButton>
-      </div>
+      <Grid2>
+        <IconButton onClick={()=> handleAction(params.row.id,"success")} sx={{marginRight:1}}><Done color="success" /></IconButton>
+        <IconButton onClick={()=> handleAction(params.row.id,"delete")}><Clear color="error" /></IconButton>
+      </Grid2>
     )
-  }
+  })
 
-  export const DoctorData = [serialNo, patientName, appointmentDate, actionTable]
+  export const DoctorData  = (handleAction) => [serialNo, patientName, appointmentDate, actionTable(handleAction)]

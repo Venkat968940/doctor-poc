@@ -2,8 +2,8 @@ import {
   Grid2,
   TextField
 } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
-import React from "react";
+import { DataGrid, GridCsvExportMenuItem, GridPrintExportMenuItem, GridToolbarContainer, GridToolbarExportContainer } from "@mui/x-data-grid";
+import React, { memo } from "react";
 import { CustomizedPagination } from "../CustomizedPagination/CustomizedPagination";
 
 const CustomTable = ({ props }) => {
@@ -13,6 +13,12 @@ const CustomTable = ({ props }) => {
   const handleSearch = (e) => {
     setSearch(e.target.value);
   };
+
+  const CustomToolbar = () =>(
+     <GridToolbarContainer>
+      <GridToolbarExportContainer><GridCsvExportMenuItem /><GridPrintExportMenuItem /></GridToolbarExportContainer>
+    </GridToolbarContainer>
+  )
 
   const CustomFooter = () => <CustomizedPagination props={props} />;
 
@@ -33,16 +39,21 @@ const CustomTable = ({ props }) => {
         loading={isLoading}
         density="compact"
         disableColumnMenu
-        disableRowSelectionOnClick
-        showColumnVerticalBorder
-        slots={{ footer: CustomFooter }}
+        disableRowSelectionOnClick={true}
+        disableColumnFilter
+        disableColumnSelector
+        disableDensitySelector
+        disableColumnResize
+        showColumnVerticalBorder={true}
+        slots={{toolbar: CustomToolbar, footer: CustomFooter }}
         paginationModel={{ page, pageSize: rowsPerPage }}
         sx={{
           "--DataGrid-overlayHeight": "200px",
+          borderRadius:2
         }}
       />
     </Grid2>
   );
 };
 
-export default CustomTable;
+export default memo(CustomTable);
